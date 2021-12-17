@@ -1,0 +1,71 @@
+
+<div class="account-pages pt-1 pt-sm-3 pb-2 pb-sm-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class=" col-md-8">
+                <div class="card">
+                    <div class="card-body p-4">
+
+                        <div class="text-center w-75 m-auto">
+                            <h4 class="text-dark-50 text-center pb-0 fw-bold">Send Message</h4>
+                        </div>
+
+                        <form #addPostForm="ngForm">
+                            <div class="mb-3">
+                                <label for="pageId" class="form-label">Twilio Id</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="password" class="form-control" placeholder="Enter your User Token"
+                                        required name="twilio" #twilio="ngModel" ngModel>
+                                    <div class="input-group-text" data-password="false">
+                                        <span class="fa fa-eye"></span>
+                                    </div>
+
+                                </div>
+                                <span *ngIf="twilio.invalid && twilio.touched" style="color: red;"> Field Required
+                                </span>
+                            </div>
+                            <div class="mb-2">
+                                <label for="authToken" class="form-label">Auth Token</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="password" class="form-control" placeholder="Enter your Page Token"
+                                        required name="authToken" #authToken="ngModel" ngModel>
+                                    <div class="input-group-text" data-password="false">
+                                        <span class="fa fa-eye"></span>
+                                    </div>
+                                </div>
+                                <span *ngIf="authToken.invalid && authToken.touched" style="color: red;"> Field Required
+                                </span>
+                            </div>
+                            <div class="mb-2">
+                                <label for="to" class="form-label"> TO </label>
+                                <input class="form-control" type="text" name="to" required placeholder="Eg: +91xxxxxxxxxx" #to="ngModel" ngModel>
+                                <span *ngIf="to.invalid && to.touched" style="color: red;"> Field Required </span>
+                            </div>
+                            <div class="mb-2">
+                                <label for="example-textarea" class="form-label">Message</label>
+                                <textarea class="form-control" rows="8" name="message" required
+                                    #message="ngModel" ngModel></textarea>
+                                <div *ngIf="message.invalid && message.touched" style="color: red;">
+                                    Field Required
+                                </div>
+                            </div>
+                            <div class=" mb-0 text-center">
+                                <button class="btn btn-primary" type="submit" (click)="addPost(addPostForm)"
+                                    [disabled]="!addPostForm.valid">Send Message
+                                    <span class="spinner-border spinner-border-sm" role="status" *ngIf="loading"></span>
+                                </button>
+                            </div>
+
+                        </form>
+                    </div> <!-- end card-body -->
+                </div>
+                <!-- end card -->
+
+
+
+            </div> <!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</div>

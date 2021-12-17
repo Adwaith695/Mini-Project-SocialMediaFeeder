@@ -1,0 +1,65 @@
+<div class="account-pages pt-1 pt-sm-3 pb-2 pb-sm-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class=" col-md-8">
+                <div class="card">
+                    <div class="card-body p-4">
+
+                        <div class="text-center w-75 m-auto">
+                            <h4 class="text-dark-50 text-center pb-0 fw-bold">Add post</h4>
+                        </div>
+
+                        <form #addPostForm="ngForm">
+                            <div class="mb-3">
+                                <label for="pageId" class="form-label">Page Id</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="password" class="form-control" placeholder="Enter your User Token"
+                                        required name="pageId" #pageId="ngModel" ngModel>
+                                    <div class="input-group-text" data-password="false">
+                                        <span class="fa fa-eye"></span>
+                                    </div>
+
+                                </div>
+                                <span *ngIf="pageId.invalid && pageId.touched" style="color: red;"> Field Required
+                                </span>
+                            </div>
+                            <div class="mb-2">
+                                <label for="pageToken" class="form-label">Page Token</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="password" class="form-control" placeholder="Enter your Page Token"
+                                        required name="pageToken" #pageToken="ngModel" ngModel>
+                                    <div class="input-group-text" data-password="false">
+                                        <span class="fa fa-eye"></span>
+                                    </div>
+                                </div>
+                                <span *ngIf="pageToken.invalid && pageToken.touched" style="color: red;"> Field Required
+                                </span>
+                            </div>
+                            <div class="mb-2">
+                                <label for="example-textarea" class="form-label">Message</label>
+                                <textarea class="form-control" rows="8" name="message" required
+                                    #message="ngModel" ngModel></textarea>
+                                <div *ngIf="message.invalid && message.touched" style="color: red;">
+                                    Field Required
+                                </div>
+                            </div>
+                            <div class=" mb-0 text-center">
+                                <button class="btn btn-primary" type="submit" (click)="addPost(addPostForm)"
+                                    [disabled]="!addPostForm.valid">Post
+                                    <span class="spinner-border spinner-border-sm" role="status" *ngIf="loading"></span>
+                                </button>
+                            </div>
+
+                        </form>
+                    </div> <!-- end card-body -->
+                </div>
+                <!-- end card -->
+
+
+
+            </div> <!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</div>

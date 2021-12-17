@@ -1,0 +1,311 @@
+openapi: 3.0.0
+info:
+  title:  API
+  version: '1.0'
+  description: Critical APIs for functioning of Social Media Feefer
+servers:
+  - url: /
+    variables: {}
+
+docExpansion : "none"
+
+components:
+  securitySchemes:
+     API-TOKEN:
+      type: apiKey
+      in: header
+      name: x-access-token
+
+security:
+  - API-TOKEN: []
+
+tags:
+  - name: Authorization
+    description: Auth APIs
+  - name: Commonpost
+    description: CRUD APIs
+  - name: Facebook
+    description: Facebook CRUD APIs
+  - name: Whatsapp
+    description: Whatsapp CRUD APIs
+  - name: Twitter
+    description: Twitter CRUD APIs
+
+
+
+
+paths:
+
+  /userLogin:
+    summary: User Login Function
+    description: Used for logging the user into the application
+    post:
+      summary: User Login Function
+      operationId: auth-user-login
+      security: []
+      description: >-
+        Takes username & password, logs in the user & is successful, returns a
+        user token, else shows rejection.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: @gmail.com
+                password:
+                  type: string
+                  example: 
+      responses:
+        '200':
+          description: Login Successful
+        '213':
+          description: Failed to decrypt user password from Database
+      tags: [Authorization]
+
+
+  /forgotPassword:
+    summary: User password Recovery
+    description: Used for user password recovery
+    post:
+      summary: User password Recovery
+      operationId: auth-user-recover
+      security: []
+      description: >-
+        Takes username and sends the password recovery email to the user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: abc@xyz.com
+
+      responses:
+        '200':
+          description: Success
+      tags: [Authorization]
+
+  /resetPassword:
+    summary: Reset password Function
+    description: Used for verifying jwt token and reseting user password
+
+    get:
+      summary: Verifies jwt token in password recovery url
+      operationId: auth-user-reset-get
+      description: >-
+        Check whether the user is valid, if so return user_id along with message "valid user", else shows error
+      responses:
+        '200':
+          description: Valid user
+      tags: [Authorization]
+
+    put:
+      summary: Reset password
+      operationId: auth-user-reset-put
+      security: []
+      description: >-
+        Takes id and password and then update the user password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                _id:
+                  type: string
+                  example: 
+                password:
+                  type: string
+                  example: ""
+      responses:
+        '200':
+          description: User Password Updated
+      tags: [Authorization]
+
+  /sendall:
+    summary: Send post to all social media handles
+    description: Send post to all social media handles
+    post:
+      summary: Social Media feeding
+      operationId: core-commonpost
+      security: []
+      description: >-
+        Send post to all social media handles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                msg:
+                  type: string
+                  example: Default Message
+
+      responses:
+        '200':
+          description: Posting Successful
+        '213':
+          description: Failed to post in all social media
+      tags: [Commonpost]
+
+
+
+  /facebook:
+    summary: Send post to Facebook
+    description: Send post to Facebook
+    post:
+      summary: Social Media feeding
+      operationId: core-facebook
+      security: []
+      description: >-
+        Send post to Facebook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                msg:
+                  type: string
+                  example: Default Message
+
+      responses:
+        '200':
+          description: Posting Successful
+        '213':
+          description: Failed to post in FB
+      tags: [ Facebook ]
+
+    get:
+      summary: get all post in that page
+      operationId: core-facebook
+      description: >-
+        get all post in that page
+      responses:
+        '200':
+          description: data served
+      tags: [ Facebook ]
+
+    delete:
+      summary: Delete a post
+      operationId: core-facebook
+      description: >-
+        Delete a fb post
+      parameters:
+        - name: ppid
+          in: query
+          description: Filter Query
+          schema:
+            type: string
+            example: { "ppid": "621212" }
+      responses:
+        '200':
+          description: Successfully deleted
+        '400':
+          description: Not found or bad request
+
+        '404':
+          description: Failed to connect to Mongo DB
+
+      tags: [ Facebook ]
+
+  /whatsapp:
+    summary: Send post to Whatsapp
+    description: Send post to Whatsapp
+    post:
+      summary: Social Media feeding
+      operationId: core-Whatsapp
+      security: []
+      description: >-
+        Send post to Whatsapp
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                msg:
+                  type: string
+                  example: Default Message
+
+      responses:
+        '200':
+          description: Posting Successful
+        '213':
+          description: Failed to post in whatsapp
+      tags: [ Whatsapp ]
+
+  /twitter:
+    summary: Send post to twitter
+    description: Send post to twitter
+    post:
+      summary: Social Media feeding
+      operationId: core-twitter
+      security: []
+      description: >-
+        Send post to Whatsapp
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                msg:
+                  type: string
+                  example: Default Message
+
+      responses:
+        '200':
+          description: Posting Successful
+        '213':
+          description: Failed to post in  twitter
+      tags: [ Twitter ]
+
+    get:
+      summary: Fetch recent tweets
+      operationId: core-twiiter
+      description: >-
+        Fetch recent tweets
+      responses:
+        '200':
+          description: Data served
+        '400':
+          description: Not found or bad request
+        '500':
+          description: Failed to connect to Mongo DB
+      tags: [ Twitter ]
+
+  /trending:
+    summary: Fetches recent trending tweets
+    description: Send get to twiiter
+    get:
+      summary: Fetch recent trending tweets
+      operationId: core-twiiter
+      description: >-
+        Fetch recent trending tweets
+      responses:
+        '200':
+          description: Data served
+        '400':
+          description: Not found or bad request
+        '500':
+          description: Failed to connect to Mongo DB
+      tags: [ Twitter ]
+
+
+
+
+
+
